@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: lightseagreen;
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+</head>
+<body>
+<div id="box">hjksf采购部v先吃饭吧刚下车v吧hras</div>
+<script>
+    (function() {
+        /*var div = document.querySelector("div");
+        div.onmousedown = function(ev) {
+            var disX = ev.pageX - div.offsetLeft;
+            var disY = ev.pageY - div.offsetTop;
+            document.onmousemove = function(ev) {
+                div.style.left = ev.pageX - disX + "px";
+                div.style.top = ev.pageY - disY + "px";
+            };
+            document.onmouseup = function() {
+                document.onmousemove = document.onmouseup= null;
+            };
+            return false;
+        }*/
+
+        var box = document.getElementById("box");
+
+        box.addEventListener("mousedown",fnDown);
+        function fnDown(ev) {
+            var disX = ev.pageX - box.offsetLeft;
+            var disY = ev.pageY - box.offsetTop;
+            document.addEventListener('mousemove',fnMove);
+            document.addEventListener('mouseup',fnUp);
+            function fnMove(ev) {
+                var l = ev.pageX - disX;
+                var t = ev.pageY - disY;
+                box.style.left = l + "px";
+                box.style.top = t + "px";
+                if(l < 0) {
+                    l = 0;
+                }else if(l > document.documentElement.clientWidth-box.offsetWidth){
+                    l = document.documentElement.clientWidth-box.offsetWidth;
+                }
+                if(t < 0){
+                    t = 0 ;
+                }else if(t>document.documentElement.clientHeight-box.offsetHeight){
+                    t = document.documentElement.clientHeight - box.offsetHeight;
+                }
+                box.style.left = l + "px";
+                box.style.top = t + "px";
+            }
+            function fnUp() {
+                document.removeEventListener('mousemove',fnMove);
+                document.removeEventListener('mouseup',fnUp);
+            }
+            ev.preventDefault();//阻止默认行为
+
+        }
+    })()
+</script>
+</body>
+</html>
